@@ -24,6 +24,6 @@ class KeyResult extends Model
 
     public function performers()
     {
-        return $this->hasMany(Performers::class, 'key_result_id', 'id');
+        return $this->belongsTo(Performers::class, 'id', 'key_results_id');
     }
 }

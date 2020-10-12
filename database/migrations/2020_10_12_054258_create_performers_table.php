@@ -16,9 +16,7 @@ class CreatePerformersTable extends Migration
         Schema::create('performers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('key_results_id');
-            $table->unsignedBigInteger('performer_id');
 
-            $table->foreign('performer_id')->references('id')->on('users');
             $table->foreign('key_results_id')->references('id')->on('key_results');
 
             $table->timestamps();
@@ -32,6 +30,9 @@ class CreatePerformersTable extends Migration
      */
     public function down()
     {
+//        Schema::table('performers_user', function (Blueprint $table) {
+//            $table->dropForeign('performers_user_performers_id_foreign');
+//        });
         Schema::dropIfExists('performers');
     }
 }

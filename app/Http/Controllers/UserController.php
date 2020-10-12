@@ -55,4 +55,9 @@ class UserController extends Controller
     {
         return User::all();
     }
+
+    public function getUser(User $user)
+    {
+        return $user;
+    }
 }

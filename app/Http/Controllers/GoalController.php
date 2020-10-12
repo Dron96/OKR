@@ -14,7 +14,7 @@ class GoalController extends Controller
      */
     public function index()
     {
-        return Goal::all();
+        return Goal::with('author')->get();
     }
 
 
@@ -28,6 +28,7 @@ class GoalController extends Controller
     {
         $input = $request->toArray();
         $input['author'] = auth()->id();
+        $input['command'] = auth()->user()->command;
         $goal = Goal::create($input);
 
         return $goal;
@@ -37,11 +38,11 @@ class GoalController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return Goal
+     * @return Goal|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
     public function show(Goal $goal)
     {
-        return $goal;
+        return $goal->with('author')->get();
     }
 
     /**

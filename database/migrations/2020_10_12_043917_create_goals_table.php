@@ -23,13 +23,12 @@ class CreateGoalsTable extends Migration
             $table->string('status');
             $table->unsignedBigInteger('executor')->nullable();
             $table->string('descr')->nullable();
-            $table->unsignedBigInteger('command')->nullable();
+            $table->string('command')->nullable();
 
             $table->timestamps();
 
             $table->foreign('author')->references('id')->on('users');
             $table->foreign('executor')->references('id')->on('users');
-            //$table->foreign('command')->references('id')->on('');
         });
     }
 

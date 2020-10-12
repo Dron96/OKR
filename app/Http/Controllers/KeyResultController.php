@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Goal;
 use App\Models\KeyResult;
+use App\Models\Performers;
 use Illuminate\Http\Request;
 
 class KeyResultController extends Controller
@@ -28,15 +29,17 @@ class KeyResultController extends Controller
     {
         $input = $request->toArray();
         $input['goal_id'] = $goal->id;
+        $keyResult = KeyResult::create($input);
+        Performers::create(['key_results_id' => $keyResult->id]);
 
-        return KeyResult::create($input);
+        return $keyResult;
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return KeyResult
      */
     public function show(KeyResult $keyResult)
     {
@@ -57,6 +60,15 @@ class KeyResultController extends Controller
         $keyResult->save();
 
         return $keyResult;
+    }
+
+    public function addUserToPerformers(KeyResult $keyResult, Request $request)
+    {
+        $performers = $keyResult->performers;
+        $performers->users()->detach();
+        $performers->users()->attach($request->users);
+
+        return response()->json(['Исполнители' => $performers->users]);
     }
 
     /**

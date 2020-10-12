@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('User', 'executor', 'id');
     }
+
+    public function performers()
+    {
+        return $this->belongsToMany(Performers::class);
+    }
 }

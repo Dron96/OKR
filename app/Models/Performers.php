@@ -9,8 +9,17 @@ class Performers extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'key_results_id'
+    ];
+
     public function keyResult()
     {
-        return $this->belongsTo('Performers', 'key_result_id', 'id');
+        return $this->hasOne(KeyResult::class, 'id', 'key_results_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }
