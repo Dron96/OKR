@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Performers extends Model
 {
     use HasFactory;
+
+    public function keyResult()
+    {
+        return $this->belongsTo('Performers', 'key_result_id', 'id');
+    }
 }

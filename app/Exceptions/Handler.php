@@ -2,7 +2,11 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -33,5 +37,33 @@ class Handler extends ExceptionHandler
     public function register()
     {
         //
+    }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return response()->json(['errors' => 'Вы не авторизованы.'], 401);
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
+            switch ($exception->getModel()) {
+                case 'App\Models\Goal':
+                    return response()->json(['message' => 'Такой цели не существует'], 404);
+                    break;
+                case 'App\Models\KeyResult':
+                    return response()->json(['message' => 'Такого ключевого результата не существует'], 404);
+                    break;
+                case 'App\User':
+                    return response()->json(['message' => 'Такого пользователя не существует'], 404);
+                    break;
+            }
+
+        }
+        if ($exception instanceof AuthorizationException) {
+            return response()->json(['message' => 'У вас недостаточно прав'], 403);
+        }
+
+        return parent::render($request, $exception);
     }
 }
