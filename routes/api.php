@@ -23,13 +23,29 @@ use App\Http\Controllers\GoalController;
 
 Route::post('register', [UserController::class, 'register']);
 Route::get('login', [UserController::class, 'login'])->name('login');
+Route::get('users', [UserController::class, 'getAllUsers']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('logout', [UserController::class, 'logout']);
 
-    Route::get('goals', [GoalController::class, 'index']);
-    Route::post('goals', [GoalController::class, 'store']);
+    Route::prefix('goals')->group(function () {
+        Route::get('/', [GoalController::class, 'index']);
+        Route::post('/', [GoalController::class, 'store']);
 
-    Route::get('goals/{goal}', [KeyResultController::class, 'show']);
+        Route::prefix('{goal}')->group(function () {
+            Route::delete('/', [GoalController::class, 'destroy']);
+            Route::get('/', [GoalController::class, 'show']);
+            Route::put('/', [GoalController::class, 'update']);
+
+            Route::get('/key-results', [KeyResultController::class, 'index']);
+            Route::post('/', [KeyResultController::class, 'store']);
+        });
+    });
+
+    Route::prefix('key-results/{keyResult}')->group(function () {
+        Route::delete('/', [KeyResultController::class, 'destroy']);
+        Route::put('/', [KeyResultController::class, 'update']);
+        Route::get('/', [KeyResultController::class, 'show']);
+    });
 });
 

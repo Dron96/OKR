@@ -37,33 +37,43 @@ class GoalController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Goal
      */
-    public function show($id)
+    public function show(Goal $goal)
     {
-        //
+        return $goal;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param Goal $goal
+     * @return Goal
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Goal $goal)
     {
-        //
+        $input = $request->toArray();
+        $goal->fill($input);
+        $goal->save();
+
+        return $goal;
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Goal $goal)
     {
-        //
+        $keyResuts = $goal->keyResults;
+        foreach ($keyResuts as $keyResut) {
+            $keyResut->delete();
+        }
+        $goal->delete();
+
+        return response()->json(['message' => 'Цель и ее ключевые результаты успешно удалены'], 200);
     }
 }

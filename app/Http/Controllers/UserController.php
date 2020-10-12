@@ -50,4 +50,9 @@ class UserController extends Controller
             'message' => 'Вы успешно вышли',
         ], 200);
     }
+
+    public function getAllUsers()
+    {
+        return User::all();
+    }
 }

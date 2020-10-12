@@ -18,8 +18,8 @@ class CreateKeyResultsTable extends Migration
             $table->string('title');
             $table->unsignedBigInteger('goal_id');
             $table->unsignedInteger('weight');
-            $table->unsignedBigInteger('executor');
-            $table->unsignedInteger('percent');
+            $table->unsignedBigInteger('executor')->nullable();
+            $table->unsignedInteger('percent')->default(0);
 
             $table->foreign('executor')->references('id')->on('users');
             $table->foreign('goal_id')->references('id')->on('goals');

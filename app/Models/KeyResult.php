@@ -9,6 +9,14 @@ class KeyResult extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'percent',
+        'weight',
+        'goal_id',
+        'executor'
+    ];
+
     public function goal()
     {
         return $this->belongsTo(Goal::class, 'goal_id', 'id');
