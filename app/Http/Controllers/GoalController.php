@@ -42,7 +42,7 @@ class GoalController extends Controller
      */
     public function show(Goal $goal)
     {
-        return $goal->with('author')->get();
+        return $goal;
     }
 
     /**
