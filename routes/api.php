@@ -28,6 +28,7 @@ Route::get('users', [UserController::class, 'getAllUsers']);
 Route::middleware('auth:api')->group(function () {
     Route::get('logout', [UserController::class, 'logout']);
     Route::get('users/{user}', [UserController::class, 'getUser']);
+    Route::delete('users/{user}', [UserController::class, 'destroy']);
 
     Route::prefix('goals')->group(function () {
         Route::get('/', [GoalController::class, 'index']);
