@@ -59,6 +59,14 @@ class KeyResultController extends Controller
         $keyResult->fill($input);
         $keyResult->save();
 
+        $goal = $keyResult->goal;
+        $percent = 0;
+        foreach ($goal->keyResults as $keyResult) {
+            $percent += $keyResult->weight * $keyResult->percent / 100;
+        }
+        $goal['percentOfCompletion'] = (integer)$percent;
+        $goal->save();
+
         return $keyResult;
     }
 
