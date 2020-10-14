@@ -43,7 +43,7 @@ class KeyResultController extends Controller
      */
     public function show(KeyResult $keyResult)
     {
-        return $keyResult->with('performers.users')->get();
+        return $keyResult;
     }
 
     /**
