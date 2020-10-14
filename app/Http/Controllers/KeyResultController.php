@@ -12,11 +12,11 @@ class KeyResultController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index(Goal $goal)
     {
-        return $goal->keyResults;
+        return $goal->keyResults()->with('performers.users')->get();
     }
 
     /**
@@ -43,7 +43,7 @@ class KeyResultController extends Controller
      */
     public function show(KeyResult $keyResult)
     {
-        return $keyResult;
+        return $keyResult->with('performers.users')->get();
     }
 
     /**
@@ -87,6 +87,7 @@ class KeyResultController extends Controller
      */
     public function destroy(KeyResult $keyResult)
     {
+        $keyResult->performers()->delete();
         $keyResult->delete();
 
         return response()->json(['message' => 'Ключевой результат успешно удален'], 200);
