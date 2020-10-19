@@ -22,7 +22,7 @@ use App\Http\Controllers\GoalController;
 //});
 
 Route::post('register', [UserController::class, 'register']);
-Route::get('login', [UserController::class, 'login'])->name('login');
+Route::post('login', [UserController::class, 'login'])->name('login');
 Route::get('users', [UserController::class, 'getAllUsers']);
 
 Route::middleware('auth:api')->group(function () {
