@@ -29,6 +29,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('logout', [UserController::class, 'logout']);
     Route::get('users/{user}', [UserController::class, 'getUser']);
     Route::delete('users/{user}', [UserController::class, 'destroy']);
+    Route::put('users/{user}/change-role', [UserController::class, 'changeRole'])
+        ->middleware('can:changeRole,user');
 
     Route::prefix('goals')->group(function () {
         Route::get('/', [GoalController::class, 'index']);

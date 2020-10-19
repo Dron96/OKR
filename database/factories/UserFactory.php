@@ -30,6 +30,7 @@ class UserFactory extends Factory
             'password' => bcrypt('password'),
             //'remember_token' => Str::random(10),
             'command' => 'Dream Team',
+            'role' => 'user',
             'activity_sphere' => 'programming',
         ];
     }

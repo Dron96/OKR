@@ -50,13 +50,10 @@ class Handler extends ExceptionHandler
             switch ($exception->getModel()) {
                 case 'App\Models\Goal':
                     return response()->json(['message' => 'Такой цели не существует'], 404);
-                    break;
                 case 'App\Models\KeyResult':
                     return response()->json(['message' => 'Такого ключевого результата не существует'], 404);
-                    break;
                 case 'App\User':
                     return response()->json(['message' => 'Такого пользователя не существует'], 404);
-                    break;
             }
 
         }

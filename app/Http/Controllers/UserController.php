@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserChangeRoleRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -66,5 +67,12 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json(['message' => 'Пользователь успешно удален']);
+    }
+
+    public function changeRole(UserChangeRoleRequest $request, User $user)
+    {
+        $user->update(['role' => $request->role]);
+
+        return $user;
     }
 }

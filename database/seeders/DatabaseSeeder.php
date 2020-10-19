@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(10)->create();
+        //User::factory(10)->create();
+
+        $admin = [
+            'name' => 'Admin',
+            'email' => 'admin',
+            'password' => bcrypt('administrator'),
+            'command' => 'administrator',
+            'activity_sphere' => 'administrator',
+            'role' => 'admin',
+        ];
+
+        DB::table('users')->insert($admin);
     }
 }
