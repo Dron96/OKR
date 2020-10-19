@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
 
         $admin = [
             'name' => 'Admin',
-            'email' => 'admin',
+            'email' => 'admin@admin.ru',
             'password' => bcrypt('administrator'),
             'command' => 'administrator',
             'activity_sphere' => 'administrator',
