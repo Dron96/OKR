@@ -37,20 +37,31 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/', [GoalController::class, 'store']);
 
         Route::prefix('{goal}')->group(function () {
-            Route::delete('/', [GoalController::class, 'destroy']);
-            Route::get('/', [GoalController::class, 'show']);
-            Route::put('/', [GoalController::class, 'update']);
+            Route::middleware('can:updateOrDeleteSendForCheck,goal')->group(function () {
+                Route::delete('/', [GoalController::class, 'destroy']);
+                Route::put('/', [GoalController::class, 'update']);
+                Route::put('/send-for-check', [GoalController::class, 'sendForCheck']);
+            });
 
+            Route::middleware('can:updateOrDeleteSendForCheck,goal')->group(function () {
+                Route::put('/approve', [GoalController::class, 'approve']);
+                Route::put('/reject', [GoalController::class, 'reject']);
+            });
+
+            Route::get('/', [GoalController::class, 'show']);
             Route::get('/key-results', [KeyResultController::class, 'index']);
-            Route::post('/', [KeyResultController::class, 'store']);
+            Route::post('/', [KeyResultController::class, 'store'])->middleware('can:create');
         });
     });
 
     Route::prefix('key-results/{keyResult}')->group(function () {
-        Route::delete('/', [KeyResultController::class, 'destroy']);
-        Route::put('/', [KeyResultController::class, 'update']);
+        Route::middleware('can:createUpdateOrDeleteOrAddPerformers,keyResult')->group(function () {
+            Route::post('/add-performers', [KeyResultController::class, 'addUserToPerformers']);
+            Route::delete('/', [KeyResultController::class, 'destroy']);
+            Route::put('/', [KeyResultController::class, 'update']);
+        });
+
         Route::get('/', [KeyResultController::class, 'show']);
-        Route::post('/add-performers', [KeyResultController::class, 'addUserToPerformers']);
     });
 });
 

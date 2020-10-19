@@ -20,7 +20,7 @@ class CreateGoalsTable extends Migration
             $table->date('dateEnd');
             $table->unsignedBigInteger('author');
             $table->unsignedInteger('percentOfCompletion')->default(0);
-            $table->string('status');
+            $table->string('status')->default('unsent');
             $table->unsignedBigInteger('executor')->nullable();
             $table->string('descr')->nullable();
             $table->string('command')->nullable();

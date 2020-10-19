@@ -77,4 +77,25 @@ class GoalController extends Controller
 
         return response()->json(['message' => 'Цель и ее ключевые результаты успешно удалены'], 200);
     }
+
+    public function sendForCheck(Goal $goal)
+    {
+        $goal->update(['status' => 'proposed']);
+
+        return $goal;
+    }
+
+    public function reject(Goal $goal)
+    {
+        $goal->update(['status' => 'rejected']);
+
+        return $goal;
+    }
+
+    public function approve(Goal $goal)
+    {
+        $goal->update(['status' => 'approved']);
+
+        return $goal;
+    }
 }
