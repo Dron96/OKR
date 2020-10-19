@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UserChangeRoleRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
         $data = $request->toArray();
         $data['password'] = bcrypt($data['password']);
