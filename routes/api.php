@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\KeyResultController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoalController;
 
@@ -37,25 +36,26 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/', [GoalController::class, 'store']);
 
         Route::prefix('{goal}')->group(function () {
-            Route::middleware('can:updateOrDeleteSendForCheck,goal')->group(function () {
+            Route::middleware('can:updateOrDeleteSendForCheckCreateKeyResult,goal')->group(function () {
                 Route::delete('/', [GoalController::class, 'destroy']);
                 Route::put('/', [GoalController::class, 'update']);
                 Route::put('/send-for-check', [GoalController::class, 'sendForCheck']);
+                Route::post('/', [KeyResultController::class, 'store']);
             });
 
-            Route::middleware('can:updateOrDeleteSendForCheck,goal')->group(function () {
+            Route::middleware('can:ApproveReject,goal')->group(function () {
                 Route::put('/approve', [GoalController::class, 'approve']);
                 Route::put('/reject', [GoalController::class, 'reject']);
             });
 
             Route::get('/', [GoalController::class, 'show']);
             Route::get('/key-results', [KeyResultController::class, 'index']);
-            Route::post('/', [KeyResultController::class, 'store'])->middleware('can:create');
+
         });
     });
 
     Route::prefix('key-results/{keyResult}')->group(function () {
-        Route::middleware('can:createUpdateOrDeleteOrAddPerformers,keyResult')->group(function () {
+        Route::middleware('can:updateOrDeleteOrAddPerformers,keyResult')->group(function () {
             Route::post('/add-performers', [KeyResultController::class, 'addUserToPerformers']);
             Route::delete('/', [KeyResultController::class, 'destroy']);
             Route::put('/', [KeyResultController::class, 'update']);

@@ -17,4 +17,9 @@ class UserPolicy
     {
         return $user->role === 'admin';
     }
+
+    public function createGoal(User $user)
+    {
+        return $user->role === 'manager';
+    }
 }

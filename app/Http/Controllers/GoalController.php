@@ -17,7 +17,6 @@ class GoalController extends Controller
         return Goal::with('author')->get();
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -26,6 +25,7 @@ class GoalController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('createGoal', auth()->user());
         $input = $request->toArray();
         $input['author'] = auth()->id();
         $input['command'] = auth()->user()->command;

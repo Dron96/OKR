@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Goal;
 use App\Models\KeyResult;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -17,7 +18,7 @@ class KeyResultPolicy
      * @param  \App\Models\KeyResult  $keyResult
      * @return mixed
      */
-    public function createUpdateOrDeleteOrAddPerformers(User $user, KeyResult $keyResult)
+    public function updateOrDeleteOrAddPerformers(User $user, KeyResult $keyResult)
     {
         return $user->role === 'manager' and
             $keyResult->goal->author === $user->id;
