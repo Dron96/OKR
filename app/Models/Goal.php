@@ -19,7 +19,8 @@ class Goal extends Model
         'dateStart',
         'dateEnd',
         'percentOfCompletion',
-        'command'
+        'command',
+        'rejectionComments'
         ];
 
     public function keyResults()

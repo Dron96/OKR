@@ -24,6 +24,7 @@ class CreateGoalsTable extends Migration
             $table->unsignedBigInteger('executor')->nullable();
             $table->string('descr')->nullable();
             $table->string('command')->nullable();
+            $table->string('rejectionComments')->nullable();
 
             $table->timestamps();
 

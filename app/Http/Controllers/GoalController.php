@@ -95,9 +95,11 @@ class GoalController extends Controller
         return $goal;
     }
 
-    public function approve(Goal $goal)
+    public function approve(Request $request, Goal $goal)
     {
-        $goal->update(['status' => 'approved']);
+        $goal->update([
+            'status' => 'approved',
+            'rejectionComments' => $request->comment]);
 
         return $goal;
     }
