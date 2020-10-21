@@ -71,6 +71,7 @@ class GoalController extends Controller
     {
         $keyResuts = $goal->keyResults;
         foreach ($keyResuts as $keyResut) {
+            $keyResut->performers()->delete();
             $keyResut->delete();
         }
         $goal->delete();
