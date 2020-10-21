@@ -87,7 +87,9 @@ class KeyResultController extends Controller
      */
     public function destroy(KeyResult $keyResult)
     {
-        $keyResult->performers()->delete();
+        $performers = $keyResult->performers;
+        $performers->users()->detach();
+        $performers->delete();
         $keyResult->delete();
 
         return response()->json(['message' => 'Ключевой результат успешно удален'], 200);
